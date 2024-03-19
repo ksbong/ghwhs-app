@@ -1,0 +1,28 @@
+{
+  "name": "ghwhs-rn",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@my-school.info/neis-api": "^1.0.0",
+    "expo": "~49.0.15",
+    "expo-splash-screen": "~0.20.5",
+    "expo-status-bar": "~1.6.0",
+    "firebase": "^10.5.2",
+    "react": "18.2.0",
+    "react-native": "0.72.6",
+    "react-native-gesture-flip-card": "^1.0.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "eslint": "^8.52.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-react": "^7.33.2"
+  },
+  "private": true
+}
