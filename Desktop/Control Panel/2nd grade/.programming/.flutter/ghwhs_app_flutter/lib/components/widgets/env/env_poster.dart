@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ghwhs_app_flutter/utils/na_alert.dart';
 import '../../component.dart';
 import '../../../screens/view/env/env_poster_page.dart';
 
 Widget envPoster(context) {
   return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const EnvPosterPage()));
+        displayNAAlert(context);
+        // Navigator.push(context,
+        //     MaterialPageRoute(builder: (context) => const EnvPosterPage()));
       },
       child: buildComponent(
           120,

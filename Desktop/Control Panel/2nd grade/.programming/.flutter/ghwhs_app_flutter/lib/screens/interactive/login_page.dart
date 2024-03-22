@@ -120,11 +120,11 @@ class _LogInPageState extends State<LogInPage> {
         _shakeAnimationController2.stop();
       }
       if (_nameController.text == '' ||
-          studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.') {
+          studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.'||studentID=='스캔하세요') {
         if (_nameController.text == '') {
           _shakeAnimationController1.start(shakeCount: 1);
         }
-        if (studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.') {
+        if (studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.'||studentID=='스캔하세요') {
           Future.delayed(const Duration(milliseconds: 100),
               () => _shakeAnimationController2.start(shakeCount: 1));
         }
