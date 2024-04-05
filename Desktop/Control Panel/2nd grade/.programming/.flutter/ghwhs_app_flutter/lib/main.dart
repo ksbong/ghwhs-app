@@ -11,10 +11,9 @@ class MyApp extends StatefulWidget {
 }
 
 class MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
-    return const  MaterialApp(
+    return const MaterialApp(
         title: '광혜원고',
         debugShowCheckedModeBanner: false,
         // home: TestComponent(),

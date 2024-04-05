@@ -31,61 +31,6 @@ class MealBoardState extends State<MealBoard> {
     super.dispose();
   }
 
-  // Future<void> getMeal() async {
-  //   DateTime now = DateTime.now();
-  //   String today = DateFormat('yyyyMMdd').format(now);
-  //   String url =
-  //       'https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=8000032&MLSV_YMD=$today';
-  //
-  //   final response = await http.get(Uri.parse(url));
-  //
-  //   if (response.statusCode == 200) {
-  //     final body = json.decode(response.body);
-  //
-  //     try {
-  //       var root = body['mealServiceDietInfo'][1]['row'];
-  //       try {
-  //         setState(() {
-  //           breakFast = root[0]['DDISH_NM'];
-  //           lunch = root[1]['DDISH_NM'];
-  //           dinner = root[2]['DDISH_NM'];
-  //         });
-  //       } catch (e) {
-  //         try {
-  //           setState(() {
-  //             breakFast = '오늘은 조식이 없습니다.';
-  //             lunch = root[0]['DDISH_NM'];
-  //             dinner = '오늘은 석식이 없습니다.';
-  //           });
-  //         } catch (e) {
-  //           try {
-  //             setState(() {
-  //               breakFast = '오늘은 조식이 없습니다.';
-  //               lunch = root[0]['DDISH_NM'];
-  //               dinner = root[1]['DDISH_NM'];
-  //             });
-  //           } catch (e) {
-  //             setState(() {
-  //               breakFast = root[0]['DDISH_NM'];
-  //               lunch = root[1]['DDISH_NM'];
-  //               dinner = '오늘은 석식이 없습니다.';
-  //             });
-  //           }
-  //         }
-  //       }
-  //     } catch (e) {
-  //       // print(e);
-  //       setState(() {
-  //         breakFast = '오늘은 조식이 없습니다.';
-  //         lunch = '오늘은 중식이 없습니다.';
-  //         dinner = '오늘은 석식이 없습니다.';
-  //       });
-  //     }
-  //   } else {
-  //     // ignore: avoid_print
-  //     print("Failed: ${response.statusCode}");
-  //   }
-  // }
   Future<void> getMeal() async {
     DateTime now = DateTime.now();
     String today = DateFormat('yyyyMMdd').format(now);

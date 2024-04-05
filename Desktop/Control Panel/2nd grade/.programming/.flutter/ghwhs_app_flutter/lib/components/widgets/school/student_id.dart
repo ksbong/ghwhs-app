@@ -1,7 +1,4 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names, use_key_in_widget_constructors
-
-import 'dart:async';
-
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flip_card/flutter_flip_card.dart';
@@ -12,7 +9,26 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 const storage = FlutterSecureStorage();
 
 class IDCard extends StatefulWidget {
-  const IDCard({super.key});
+  final storedName;
+  final storedBday;
+  final storedID;
+  final grade1;
+  final grade2;
+  final grade3;
+
+  final validYearStart;
+  final validYearEnd;
+
+  const IDCard(
+      {super.key,
+      @required this.storedName,
+      @required this.storedBday,
+      @required this.storedID,
+      @required this.grade1,
+      @required this.grade2,
+      @required this.grade3,
+      @required this.validYearStart,
+      @required this.validYearEnd});
 
   @override
   State createState() => IDCardState();
@@ -28,56 +44,35 @@ class IDCardState extends State<IDCard> {
         controller: cong,
         animationDuration: const Duration(milliseconds: 800),
         axis: FlipAxis.vertical,
-        frontWidget: const Center(child: FrontPart()),
-        backWidget: Center(child: BackPart()));
+        frontWidget: Center(
+            child: FrontPart(
+          name: widget.storedName,
+        )),
+        backWidget: Center(
+            child: BackPart(
+          bday: widget.storedBday,
+          grade1: widget.grade1,
+          grade2: widget.grade2,
+          grade3: widget.grade3,
+          name: widget.storedName,
+          studentID: widget.storedID,
+          validYearStart: widget.validYearStart,
+          validYearEnd: widget.validYearEnd,
+        )));
   }
 }
 
 class FrontPart extends StatefulWidget {
-  const FrontPart({super.key});
+  final name;
+  const FrontPart({super.key, @required this.name});
 
   @override
   State<FrontPart> createState() => _FrontPartState();
 }
 
 class _FrontPartState extends State<FrontPart> {
-  late Timer timer;
-
-  bool isTeacher = false;
-  String name = '';
-
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 10), (Timer t) {
-      setInit();
-    });
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  setInit() async {
-    String? teacher = await storage.read(key: 'teacher');
-    if (teacher == 'false') {
-      String? storedName = await storage.read(key: 'name');
-      setState(() {
-        name = storedName ?? "No name";
-      });
-    } else {
-      String? storedName = await storage.read(key: 'name');
-      setState(() {
-        name = storedName ?? 'No name';
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    setInit();
     return Container(
         decoration: BoxDecoration(
             color: Colors.white,
@@ -133,7 +128,7 @@ class _FrontPartState extends State<FrontPart> {
               ),
             ),
             Text(
-              name,
+              widget.name,
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
@@ -168,82 +163,31 @@ class _FrontPartState extends State<FrontPart> {
 }
 
 class BackPart extends StatefulWidget {
+  final name;
+  final validYearStart;
+  final validYearEnd;
+  final grade1;
+  final grade2;
+  final grade3;
+  final bday;
+  final studentID;
+
+  const BackPart(
+      {super.key,
+      @required this.name,
+      @required this.bday,
+      @required this.validYearStart,
+      @required this.validYearEnd,
+      @required this.grade1,
+      @required this.grade2,
+      @required this.grade3,
+      @required this.studentID});
+
   @override
   State createState() => _BackPartState();
 }
 
 class _BackPartState extends State<BackPart> {
-  List<String?> name = [];
-  String bday = '';
-
-  String validYearStart = '';
-  String validYearEnd = '';
-
-  String studentID = 'S12345';
-
-  String grade1 = '';
-  String grade2 = '';
-  String grade3 = '';
-
-  late Timer timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 50), (Timer t) {
-      fetchData();
-      setGrade();
-    });
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  void setValidDate(String? birth) {
-    if (birth != null) {
-      List temp = birth.split('.');
-
-      setState(() {
-        validYearStart = (int.parse(temp[0]) + 16).toString();
-        validYearEnd = (int.parse(temp[0]) + 16 + 3).toString();
-      });
-    }
-  }
-
-  void fetchData() async {
-    String? storedName = await storage.read(key: 'name');
-    List<String> tempList = [];
-
-    String? storedBday = await storage.read(key: 'bday');
-
-    String? storedID = await storage.read(key: 'studentID');
-
-    if (storedName != null) {
-      for (int i = 0; i < storedName.length; i++) {
-        tempList.add(storedName[i]);
-      }
-
-      setState(() {
-        name = tempList;
-      });
-    }
-    if (storedBday != null) {
-      setState(() {
-        bday = storedBday;
-      });
-    }
-
-    if (storedID != null) {
-      setState(() {
-        studentID = storedID;
-      });
-    }
-
-    setValidDate(bday);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -273,15 +217,15 @@ class _BackPartState extends State<BackPart> {
                       height: 10,
                     ),
                     Text(
-                      '성       명: ${name[0] ?? ''} ${name[1] ?? ''} ${name[2] ?? ''}',
+                      '성       명: ${widget.name[0] ?? ''} ${widget.name[1] ?? ''} ${widget.name[2] ?? ''}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '생년월일: $bday',
+                      '생년월일: ${widget.bday}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      '유효기간: $validYearStart.03.01.~$validYearEnd.02.28.',
+                      '유효기간: ${widget.validYearStart}.03.01.~${widget.validYearEnd}.02.28.',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -333,15 +277,15 @@ class _BackPartState extends State<BackPart> {
                         ),
                         SizedBox(
                           height: 35,
-                          child: buildTableCell(grade1),
+                          child: buildTableCell(widget.grade1),
                         ),
                         SizedBox(
                           height: 35,
-                          child: buildTableCell(grade2),
+                          child: buildTableCell(widget.grade2),
                         ),
                         SizedBox(
                           height: 35,
-                          child: buildTableCell(grade3),
+                          child: buildTableCell(widget.grade3),
                         ),
                       ],
                     ),
@@ -386,23 +330,11 @@ class _BackPartState extends State<BackPart> {
                     height: 80,
                     width: 150,
                     child: BarcodeWidget(
-                        data: studentID, barcode: Barcode.code128()))
+                        data: widget.studentID, barcode: Barcode.code128()))
               ],
             )
           ],
         ));
-  }
-
-  void setGrade() async {
-    String? temp1 = await storage.read(key: 'grade1');
-    String? temp2 = await storage.read(key: 'grade2');
-    String? temp3 = await storage.read(key: 'grade3');
-
-    setState(() {
-      grade1 = '$temp1';
-      grade2 = '$temp2';
-      grade3 = '$temp3';
-    });
   }
 }
 

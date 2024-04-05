@@ -1,38 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
-
-Future<void> _getTimetable() async {
-  const schoolCode = 'M10';
-  const schoolType = '8000032';
-  final schoolGrade = '3';
-  final schoolClass = '4';
-
-  const apiUrl = 'https://open.neis.go.kr/hub/hisTimetable';
-  const apiKey = 'cf3f3604777d4131b0e65e666ae9f895';
-
+void timeTable() async {
+  String grade = '3';
+  String classNum = '4';
   DateTime now = DateTime.now();
+
   String today = DateFormat('yyyyMMdd').format(now);
+  String key = 'cf3f3604777d4131b0e65e666ae9f895';
 
-  final response = await http.get(
-    Uri.parse(
-        '$apiUrl?key=$apiKey&Type=json&pIndex=1&pSize=5&ATPT_OFCDC_SC_CODE=$schoolCode&SD_SCHUL_CODE=$schoolType&ALL_TI_YMD=$today&GRADE=$schoolGrade&CLASS_NM=$schoolClass'),
-  );
+  Map<String, String> timeTable = {};
 
-  if (response.statusCode == 200) {
-    final decodedData = json.decode(response.body);
-    final items = decodedData['hisTimetable']['row'] as List;
+  var response = await http.get(Uri.parse(
+      'https://open.neis.go.kr/hub/hisTimetable?key=$key&Type=json&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=M10&SD_SCHUL_CODE=8000032&GRADE=$grade&CLRM_NM=$classNum&ALL_TI_YMD=$today'));
+  var responseJson = jsonDecode(response.body);
 
-    items.sort((a, b) => b['PERIO'].compareTo(a['PERIO']));
-
-    print(items.cast<Map<String, dynamic>>());
-  } else {
-    print('시간표를 불러오는 데 실패했습니다!');
+  try {
+    var content = responseJson['hisTimetable'][1]['row'] as List;
+    for (int i = 0; i < content.length; i++) {
+      timeTable[content[i]['PERIO']] = content[i]['ITRT_CNTNT'];
+    }
+  } catch (e) {
+    debugPrint('Failed to get TimeTable');
   }
+  debugPrint(timeTable as String?);
 }
-
-
-void main() async {
-  _getTimetable();
-  }

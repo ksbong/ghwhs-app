@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ghwhs_app_flutter/components/component.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-// import 'package:ghwhs_app_flutter/components/widgets/school/timetable.dart';
-// import 'package:ghwhs2/screens/view/school/time_table_page.dart';
+import 'package:ghwhs_app_flutter/components/widgets/school/timetable.dart';
 import 'package:ghwhs_app_flutter/utils/d_day.dart';
-import 'package:ghwhs_app_flutter/utils/na_alert.dart';
 
 class BannerView extends StatefulWidget {
   const BannerView({super.key});
@@ -44,8 +42,9 @@ class _Banner extends State<BannerView> {
          *  Navigator.push(context,
             MaterialPageRoute(builder: (context) => const TimeTablePage()))
          */
-        onTap: () => displayNAAlert(context),
-        // onTap: () => Navigator.push(context,  MaterialPageRoute(builder: (context) => const GHWTimeTable())),
+        //onTap: () => displayNAAlert(context),
+        onTap: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const TimeTable())),
         child: buildComponent(
             150,
             MediaQuery.of(context).size.width,

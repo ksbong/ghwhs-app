@@ -43,29 +43,6 @@ class _FineDustState extends State<FineDust> {
             MediaQuery.of(context).size.width,
             Stack(
               children: [
-                // Padding(
-                //     padding:
-                //     const EdgeInsets.only(right: 10, left: 20, top: 10),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //       children: [
-                //         const Text(
-                //           '미세먼지',
-                //           style: TextStyle(
-                //               color: Colors.white,
-                //               fontSize: 18,
-                //               fontWeight: FontWeight.bold),
-                //         ),
-                //         SizedBox(
-                //           width: MediaQuery.of(context).size.width / 2,
-                //         ),
-                //         const Icon(
-                //           Icons.arrow_forward,
-                //           size: 30,
-                //           color: Colors.white,
-                //         )
-                //       ],
-                //     )),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -195,40 +172,15 @@ class _FineDustState extends State<FineDust> {
   }
 
   Future<void> fetchData() async {
-
     String fineDustURL =
         'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=%EC%B6%A9%EC%B2%AD%EB%B6%81%EB%8F%84+%EB%AF%B8%EC%84%B8%EB%A8%BC%EC%A7%80';
-
-    //String databaseURL =
-    //    'https://hwandong-1cdba-default-rtdb.asia-southeast1.firebasedatabase.app';
-
-    // Make a GET request to fetch data
-    // final response = await http.get(Uri.parse('$databaseURL/미세먼지.json'));
-    //
-    // if (response.statusCode == 200) {
-    //   // Parse the response body
-    //   // print(response.body);
-    //   // print(response.body.runtimeType);
-    //
-    //   setState(() {
-    //     if (response.body.length == 1) {
-    //       fineDust = "0${response.body}";
-    //     } else {
-    //       fineDust = response.body;
-    //     }
-    //     currentTime = DateTime.now();
-    //   });
-    // } else {
-    //   // Handle errors
-    //   debugPrint('Failed to fetch data: ${response.statusCode}');
-    // }
     final responseFineDust = await http.get(Uri.parse(fineDustURL));
 
     if (responseFineDust.statusCode == 200) {
       var start = responseFineDust.body.toString().indexOf('진천');
       var end = responseFineDust.body.toString().indexOf('괴산');
       var foo =
-      responseFineDust.body.toString().substring(start, end).split('>');
+          responseFineDust.body.toString().substring(start, end).split('>');
       for (int i = 0; i < foo.length; i++) {
         if (foo[i].contains('<span')) foo.removeAt(i);
       }
@@ -255,12 +207,10 @@ class _FineDustState extends State<FineDust> {
       }
       foo[0] = foo[0].toString().substring(0, foo[0].indexOf('<'));
 
-
-      if(foo[0].length == 1){
+      if (foo[0].length == 1) {
         setState(() {
-
-          fineDust = "0${foo[0]}";});
-
+          fineDust = "0${foo[0]}";
+        });
       } else {
         setState(() {
           fineDust = foo[0];
@@ -269,7 +219,6 @@ class _FineDustState extends State<FineDust> {
       setState(() {
         currentTime = DateTime.now();
       });
-
     }
   }
 }

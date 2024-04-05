@@ -10,7 +10,7 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  String version = '2.0';
+  String version = '2.1';
 
   @override
   Widget build(BuildContext context) {
@@ -92,8 +92,7 @@ Future<void> showDevDialog(context) async {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _a('2022 입학생  김상봉',
-                      'https://www.instagram.com/sanggnob/'),
+                  _a('2022 입학생  김상봉', 'https://www.instagram.com/sanggnob/'),
                   // _a('2022 입학생 배진우',
                   //     'https://www.instagram.com/shipjinwoo_/')
                   // _a('2022 입학생 김민승 (일부)',

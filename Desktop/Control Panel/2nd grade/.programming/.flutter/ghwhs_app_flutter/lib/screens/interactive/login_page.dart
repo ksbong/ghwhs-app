@@ -120,11 +120,13 @@ class _LogInPageState extends State<LogInPage> {
         _shakeAnimationController2.stop();
       }
       if (_nameController.text == '' ||
-          studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.'||studentID=='스캔하세요') {
+          studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.' ||
+          studentID == '스캔하세요') {
         if (_nameController.text == '') {
           _shakeAnimationController1.start(shakeCount: 1);
         }
-        if (studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.'||studentID=='스캔하세요') {
+        if (studentID == '학생증을 등록하면 여기에 학생증 코드가 표시됩니다.' ||
+            studentID == '스캔하세요') {
           Future.delayed(const Duration(milliseconds: 100),
               () => _shakeAnimationController2.start(shakeCount: 1));
         }
@@ -157,7 +159,6 @@ class _LogInPageState extends State<LogInPage> {
               value:
                   '${selectedClass.replaceAll('반', '')}/${selectedNumber.replaceAll('번', '')}');
         }
-
         await storage.write(key: 'number', value: selectedNumber);
         await storage.write(key: 'studentID', value: studentID);
 
@@ -614,33 +615,6 @@ class _LogInPageState extends State<LogInPage> {
               const SizedBox(
                 height: 10,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       '선생님이신가요?',
-              //       style: TextStyle(
-              //           color: Colors.white.withOpacity(0.6),
-              //           fontWeight: FontWeight.normal,
-              //           fontSize: 15),
-              //     ),
-              //     const SizedBox(
-              //       width: 10,
-              //     ),
-              //     Checkbox(
-              //         value: teacher,
-              //         onChanged: (newValue) {
-              //           setState(() {
-              //             teacher = newValue as bool;
-              //           });
-              //         })
-              //   ],
-              // ),
-              //
-              // const SizedBox(
-              //   height: 10,
-              // ),
-
               ElevatedButton(
                   style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(

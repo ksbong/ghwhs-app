@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ghwhs_app_flutter/utils/na_alert.dart';
 import '../../component.dart';
-import '../../../screens/view/env/env_poster_page.dart';
 
 Widget envPoster(context) {
   return GestureDetector(
